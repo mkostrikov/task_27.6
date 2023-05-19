@@ -13,6 +13,11 @@ class Auth extends Controller
 
     public function register()
     {
+
+        if (!empty($_POST)) {
+
+        }
+
         $this->view->generate('Auth/reg.phtml');
     }
 
