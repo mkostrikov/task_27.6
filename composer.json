@@ -1,0 +1,19 @@
+{
+    "name": "mk/task_auth",
+    "type": "project",
+    "autoload": {
+        "psr-4": {
+            "App\\": "app/"
+        }
+    },
+    "authors": [
+        {
+            "name": "mk"
+        }
+    ],
+    "require": {
+        "gabordemooij/redbean": "^5.7",
+        "monolog/monolog": "^3.3",
+        "php": "^8.1"
+    }
+}
