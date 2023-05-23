@@ -13,16 +13,12 @@ class Auth extends Controller
 
     public function register()
     {
-
-        if (!empty($_POST)) {
-
-        }
-
         $this->view->generate('Auth/reg.phtml');
     }
 
     public function success()
     {
+        header('Refresh: 3; URL=/auth/login');
         $this->view->generate('Auth/success.phtml');
     }
 

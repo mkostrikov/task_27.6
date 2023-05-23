@@ -37,7 +37,6 @@
     justify-content: center;
 }
 
-.error,
 .dashboard {
     display: flex;
     flex-direction: column;
@@ -81,4 +80,29 @@
 
 .form__button:hover {
     background-color: limegreen;
+}
+
+.form__input {
+    width: 200px;
+}
+
+.wrapper {
+    width: 400px;
+    display: flex;
+    flex-wrap: wrap;
+    align-items: flex-end;
+
+}
+
+.label {
+    width: 200px;
+    text-align: center;
+}
+
+.error {
+    width: 400px;
+    height: 20px;
+    font-size: .7em;
+    text-align: right;
+    color: red;
 }

@@ -1,16 +1,30 @@
-<form action="/auth/register" method="post" class="form">
+<form action="/auth/register/handler" method="post" class="form">
     <header class="form__header">
         <p class="form__title">Регистрация</p>
     </header>
     <main class="form__main">
-        <label for="username" class="label">Имя пользователя</label>
-        <input type="text" name="username" id="username" class="form__input">
-        <label for="email" class="label">Почта</label>
-        <input type="email" name="email" id="email" class="form__input">
-        <label for="password" class="label">Пароль</label>
-        <input type="password" name="password" id="password" class="form__input">
-        <label for="password2" class="label">Подтверждение пароля</label>
-        <input type="password" name="password2" id="password2" class="form__input">
+        <input type="hidden" name="csrf" value="<?= $csrf; ?>">
+        <div class="wrapper">
+            <label for="username" class="label">Имя пользователя</label>
+            <input type="text" name="username" id="username" class="form__input">
+            <div class="error"></div>
+        </div>
+        <div class="wrapper">
+            <label for="email" class="label">Почта</label>
+            <input type="email" name="email" id="email" class="form__input">
+            <div class="error"></div>
+        </div>
+        <div class="wrapper">
+            <label for="password" class="label">Пароль</label>
+            <input type="password" name="password" id="password" class="form__input">
+            <div class="error"></div>
+        </div>
+        <div class="wrapper">
+            <label for="password2" class="label">Подтверждение пароля</label>
+            <input type="password" name="password2" id="password2" class="form__input">
+            <div class="error"></div>
+        </div>
         <button type="submit" class="form__button">Зарегистрироваться</button>
     </main>
 </form>
+<script src="/assets/js/reg.js"></script>

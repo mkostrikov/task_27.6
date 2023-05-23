@@ -6,7 +6,7 @@ class Controller
 {
     protected $view;
 
-    public function __construct($model = null)
+    public function __construct()
     {
         $this->view = new View();
     }

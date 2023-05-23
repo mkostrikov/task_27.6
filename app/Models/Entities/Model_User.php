@@ -2,7 +2,7 @@
 
 namespace App\Models\Entities;
 
-class User
+class Model_User extends \RedBean_SimpleModel
 {
     private $username;
     private $password;
@@ -17,7 +17,7 @@ class User
         $this->password = $entity->password;
         $this->email = $entity->email;
         $this->token = $entity->token;
-        $this->created = \DateTime::createFromFormat('U', time());
+        $this->created = $entity->created;
 
         if (isset($entity->role)) {
             $this->role = $entity->role;

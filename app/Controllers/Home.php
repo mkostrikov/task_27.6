@@ -8,6 +8,6 @@ class Home extends Controller
 {
     public function index()
     {
-        $this->view->generate('home.phtml');
+        $this->view->generate('Home/home.phtml');
     }
 }

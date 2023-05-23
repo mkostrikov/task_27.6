@@ -10,3 +10,6 @@ define('DATA', APP . 'Data' . DIRECTORY_SEPARATOR);
 define('MODEL', APP . 'Models' . DIRECTORY_SEPARATOR);
 define('VIEW', APP . 'Views' . DIRECTORY_SEPARATOR);
 define('LAYOUT', VIEW . 'Layout' . DIRECTORY_SEPARATOR);
+define('ROUTES', CORE . 'Routes' . DIRECTORY_SEPARATOR);
+define('TEXT_REGEXP', '/^[A-Za-z0-9-_]+$/');
+define('PASSWORD_REGEXP', '/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)[a-zA-Z\d]{8,}$/');

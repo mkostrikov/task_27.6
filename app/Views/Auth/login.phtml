@@ -3,6 +3,7 @@
         <p class="form__title">Вход</p>
     </header>
     <main class="form__main">
+        <input type="hidden" name="csrf" value="<?= $csrf; ?>">
         <label for="email" class="label">Почта</label>
         <input type="email" name="email" id="email" class="form__input">
         <label for="password" class="label">Пароль</label>
