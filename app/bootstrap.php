@@ -12,10 +12,6 @@ require_once dirname(__DIR__, 1) . '/vendor/autoload.php';
 
 \R::setup('sqlite:./db.sql');
 
-if (!\R::testConnection()) {
-    exit('Нет соединения с базой данных');
-}
-
 try {
     Core\Route::start();
 } catch (NotFound $e) {

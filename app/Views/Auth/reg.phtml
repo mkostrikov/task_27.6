@@ -1,9 +1,9 @@
-<form action="/auth/register/handler" method="post" class="form">
+<form action="" method="post" class="form">
     <header class="form__header">
         <p class="form__title">Регистрация</p>
     </header>
     <main class="form__main">
-        <input type="hidden" name="csrf" value="<?= $csrf; ?>">
+        <input type="hidden" name="csrf" value="<?= $csrf ?>">
         <div class="wrapper">
             <label for="username" class="label">Имя пользователя</label>
             <input type="text" name="username" id="username" class="form__input">
@@ -26,5 +26,6 @@
         </div>
         <button type="submit" class="form__button">Зарегистрироваться</button>
     </main>
+    <footer class="form__footer"></footer>
 </form>
 <script src="/assets/js/reg.js"></script>

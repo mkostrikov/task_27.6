@@ -3,6 +3,8 @@
 namespace App\Controllers;
 
 use App\Core\Controller;
+use App\Core\Validators\ValidateForm;
+use App\Models\User;
 
 class Auth extends Controller
 {
@@ -24,6 +26,8 @@ class Auth extends Controller
 
     public function logout()
     {
-        $this->view->generate('Auth/logout.phtml');
+        User::logout();
+        header('Location: /');
+        exit;
     }
 }

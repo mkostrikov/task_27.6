@@ -2,8 +2,6 @@
 
 namespace App\Data\Db;
 
-use App\Models\Entities\User;
-
 class Db
 {
     public static function create(string $table, array $properties)
@@ -25,4 +23,6 @@ class Db
     {
         return \R::load($table, $id);
     }
+
+
 }

@@ -11,4 +11,9 @@ class Checker
         $data = htmlspecialchars($data);
         return $data;
     }
+
+    public static function salt(string $data)
+    {
+        return md5(self::checkInput($data) . SECRET_WORD);
+    }
 }

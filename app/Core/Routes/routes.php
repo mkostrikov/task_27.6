@@ -4,6 +4,7 @@ return [
     '~^/$~' => [\App\Controllers\Home::class, 'index'],
     '~^/auth/register$~' => [\App\Controllers\Auth::class, 'register'],
     '~^/auth/register/handler$~' => [\App\Controllers\AuthHandler::class, 'register'],
+    '~^/auth/login/handler$~' => [\App\Controllers\AuthHandler::class, 'login'],
     '~^/auth/login$~' => [\App\Controllers\Auth::class, 'login'],
     '~^/auth/logout$~' => [\App\Controllers\Auth::class, 'logout'],
     '~^/auth/success$~' => [\App\Controllers\Auth::class, 'success'],
