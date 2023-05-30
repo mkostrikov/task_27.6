@@ -12,8 +12,13 @@ class Checker
         return $data;
     }
 
-    public static function salt(string $data)
+    public static function checkData(array $data): array
     {
-        return md5(self::checkInput($data) . SECRET_WORD);
+        $result = [];
+        foreach ($data as $key => $value)
+        {
+            $result[$key] = self::checkInput($value);
+        }
+        return $result;
     }
 }

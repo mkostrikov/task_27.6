@@ -1,4 +1,4 @@
-<form action="/auth/login/handler" method="post" class="form">
+<form action="" method="post" class="form">
     <header class="form__header">
         <p class="form__title">Вход</p>
     </header>
@@ -19,5 +19,11 @@
             <input type="checkbox" name="remember" id="remember" class="form__checkbox" checked>
         </div>
         <button type="submit" class="form__button">Войти</button>
+        <footer class="form__footer"></footer>
     </main>
 </form>
+<form action="/vk" method="post" class="vk">
+    <input type="hidden" name="csrf" value="<?= $csrf ?>">
+    <button type="submit" class="vk__button">Войти с помощью VK</button>
+</form>
+<script src="/assets/js/log.js"></script>

@@ -2,6 +2,8 @@
 
 namespace App\Core;
 
+use App\Models\User;
+
 class Controller
 {
     protected $view;

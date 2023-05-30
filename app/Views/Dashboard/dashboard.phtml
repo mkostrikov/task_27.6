@@ -1,3 +1,7 @@
-<div class="dashboard">
-    <h1>Dashboard</h1>
-</div>
+<?php if (!empty($_SESSION['username'])): ?>
+    <p>Hello, <?= $_SESSION['username'] ?></p>
+<?php else: ?>
+    <div class="dashboard">
+        <h1>Dashboard</h1>
+    </div>
+<?php endif; ?>

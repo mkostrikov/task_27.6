@@ -1,24 +1,16 @@
-const form = document.querySelector('.form');
+const form = document.querySelector(".form");
 const formError = document.querySelector(".form__footer");
-const errorDivs = new Map();
-errorDivs.set('username', form.username.nextElementSibling)
-    .set('email', form.email.nextElementSibling)
-    .set('password', form.password.nextElementSibling)
-    .set('password2', form.password2.nextElementSibling);
 
 form.addEventListener('submit', async (event) => {
     event.preventDefault();
 
-    for (let errorDiv of errorDivs.values()) {
-        errorDiv.textContent = "";
-    }
     formError.textContent = "";
 
     let data = new FormData(form);
 
-    fetch('/auth/register', {
-        method: 'POST',
-        body: data,
+    fetch('/auth/login', {
+        method: "POST",
+        body: data
     })
         .then(response => {
             if (response) {
@@ -33,19 +25,14 @@ form.addEventListener('submit', async (event) => {
         })
         .then(json => {
             if (json) {
-                if (json.hasOwnProperty("errors")) {
-                    let errors = json.errors;
-                    for (let key in errors) {
-                        errorDivs.get(key).textContent = errors[key];
-                    }
-                }
                 if (json.hasOwnProperty('error')) {
                     formError.textContent = json.error;
                 }
-                if (json.hasOwnProperty('register') && json.register === 'success') {
-                    location.replace('/auth/success');
+                if (json.hasOwnProperty('login') && json.login === 'success') {
+                    location.replace('/dashboard');
                 }
             }
         })
         .catch(error => console.log(error));
+
 });

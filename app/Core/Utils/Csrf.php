@@ -11,9 +11,9 @@ class Csrf
         return $token;
     }
 
-    public static function validate(string $token):bool
+    public static function validate(array $data):bool
     {
-        if ($token === $_SESSION['csrf']) {
+        if (isset($data['csrf']) && $data['csrf'] === $_SESSION['csrf']) {
             return true;
         }
         return false;

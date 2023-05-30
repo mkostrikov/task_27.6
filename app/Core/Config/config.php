@@ -15,3 +15,6 @@ define('TEXT_REGEXP', '/^[A-Za-z0-9-_]+$/');
 define('PASSWORD_REGEXP', '/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)[a-zA-Z\d]{8,}$/');
 define('SECRET_WORD', 'ohlmCanuogm');
 define('REDBEAN_MODEL_PREFIX', '\\App\\Models\\');
+define('CLIENT_ID', 51658460);
+define('CLIENT_SECRET', 'y16SrGmW7BDOTu77UXU1');
+define('REDIRECT_URI', 'http://localhost:8000/vk/oauth');

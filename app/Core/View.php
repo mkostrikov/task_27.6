@@ -6,6 +6,11 @@ use App\Core\Utils\Csrf;
 
 class View
 {
+    public function setVar(string $name, $value)
+    {
+        $this->vars[$name] = $value;
+    }
+
     public function generate($contentView, $templateView = 'template.phtml')
     {
         $csrf = Csrf::create();

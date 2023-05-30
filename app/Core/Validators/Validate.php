@@ -2,7 +2,6 @@
 
 namespace App\Core\Validators;
 
-use App\Core\Utils\Checker;
 use App\Data\Db\Db;
 
 class Validate
@@ -17,7 +16,7 @@ class Validate
 
     public static function textInput(string $str): ?string
     {
-        if (!preg_match(TEXT_REGEXP, Checker::checkInput($str))) {
+        if (!preg_match(TEXT_REGEXP, $str)) {
             return 'Допустимы символы латинского алфавита, цифры, -, _';
         }
         return null;
@@ -25,7 +24,7 @@ class Validate
 
     public static function email(string $email): ?string
     {
-        if (!filter_var(Checker::checkInput($email), FILTER_VALIDATE_EMAIL)) {
+        if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
             return 'Неверный адрес эл. почты';
         }
         return null;
@@ -33,7 +32,7 @@ class Validate
 
     public static function password(string $password): ?string
     {
-        if (!preg_match(PASSWORD_REGEXP, Checker::checkInput($password))) {
+        if (!preg_match(PASSWORD_REGEXP, $password)) {
             return 'Пароль должен быть не менее 8 символов, включать хотя бы один символ в нижнем регистре, верхнем регистре, цифру';
         }
         return null;
@@ -41,7 +40,7 @@ class Validate
 
     public static function confirmPassword(string $password, string $confirmPassword): ?string
     {
-        if (Checker::checkInput($password) !== Checker::checkInput($confirmPassword)) {
+        if ($password !== $confirmPassword) {
             return 'Пароли не совпадают';
         }
         return null;
@@ -49,7 +48,7 @@ class Validate
 
     public static function isUnique(string $table, string $column, $value): ?string
     {
-        if (Db::findOne($table, $column, Checker::checkInput($value)) !== null) {
+        if (Db::findOne($table, $column, $value) !== null) {
             return 'Уже используется';
         }
         return null;

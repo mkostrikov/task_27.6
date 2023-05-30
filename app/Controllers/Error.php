@@ -6,8 +6,8 @@ use App\Core\Controller;
 
 class Error extends Controller
 {
-    public function error404()
+    public function error(\Exception $e)
     {
-        $this->view->generate('Error/404.phtml', 'error.phtml');
+        $this->view->generate('Error/error.phtml', 'error.phtml', ['error' => $e->getMessage()]);
     }
 }

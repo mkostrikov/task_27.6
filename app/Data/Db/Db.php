@@ -24,5 +24,15 @@ class Db
         return \R::load($table, $id);
     }
 
-
+    public static function update($bean, array $properties): int
+    {
+        foreach ($bean as $key => $value)
+        {
+            if (!array_key_exists($key, $properties)) {
+                continue;
+            }
+            $bean[$key] = $properties[$key];
+        }
+        return \R::store($bean);
+    }
 }
