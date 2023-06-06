@@ -11,7 +11,7 @@ use VK\OAuth\VKOAuth;
 use VK\OAuth\VKOAuthDisplay;
 use VK\OAuth\VKOAuthResponseType;
 
-class VkAuth extends Controller
+class VkAuthController extends Controller
 {
     public function index()
     {

@@ -6,51 +6,51 @@ use App\Data\Db\Db;
 
 class Validate
 {
-    public static function required(?string $value): ?string
+    public static function required(?string $value): bool
     {
         if (empty($value)) {
-            return 'Поле должно быть заполнено';
+            return false;
         }
-        return null;
+        return true;
     }
 
-    public static function textInput(string $str): ?string
+    public static function textInput(string $str): bool
     {
         if (!preg_match(TEXT_REGEXP, $str)) {
-            return 'Допустимы символы латинского алфавита, цифры, -, _';
+            return false;
         }
-        return null;
+        return true;
     }
 
-    public static function email(string $email): ?string
+    public static function email(string $email): bool
     {
         if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
-            return 'Неверный адрес эл. почты';
+            return false;
         }
-        return null;
+        return true;
     }
 
-    public static function password(string $password): ?string
+    public static function password(string $password): bool
     {
         if (!preg_match(PASSWORD_REGEXP, $password)) {
-            return 'Пароль должен быть не менее 8 символов, включать хотя бы один символ в нижнем регистре, верхнем регистре, цифру';
+            return false;
         }
-        return null;
+        return true;
     }
 
-    public static function confirmPassword(string $password, string $confirmPassword): ?string
+    public static function confirmPassword(string $password, string $confirmPassword): bool
     {
         if ($password !== $confirmPassword) {
-            return 'Пароли не совпадают';
+            return false;
         }
-        return null;
+        return true;
     }
 
-    public static function isUnique(string $table, string $column, $value): ?string
+    public static function isUnique(string $table, string $column, $value): bool
     {
         if (Db::findOne($table, $column, $value) !== null) {
-            return 'Уже используется';
+            return false;
         }
-        return null;
+        return true;
     }
 }

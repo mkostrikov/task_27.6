@@ -11,9 +11,10 @@ class View
         $this->vars[$name] = $value;
     }
 
-    public function generate($contentView, $templateView = 'template.phtml')
+    public function generate($contentView, $vars = [], $templateView = 'template.phtml')
     {
         $csrf = Csrf::create();
+        extract($vars);
         include_once LAYOUT . $templateView;
     }
 

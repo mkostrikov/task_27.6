@@ -4,10 +4,10 @@ namespace App\Controllers;
 
 use App\Core\Controller;
 
-class Dashboard extends Controller
+class HomeController extends Controller
 {
     public function index()
     {
-        $this->view->generate('Dashboard/dashboard.phtml');
+        $this->view->generate('home/home.phtml');
     }
 }

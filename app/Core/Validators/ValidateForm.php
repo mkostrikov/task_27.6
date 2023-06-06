@@ -13,7 +13,7 @@ class ValidateForm
                 isset($data['username']) &&
                 isset($data['email']) &&
                 isset($data['password']) &&
-                isset($data['password2'])
+                isset($data['confirm'])
             )
         ) {
             return null;
@@ -38,23 +38,25 @@ class ValidateForm
     {
         $errors = [];
         $errors['username'] =
-            Validate::required($data['username']) ??
-            Validate::textInput($data['username']) ??
+            Validate::required($data['username']) &&
+            Validate::textInput($data['username']) &&
             Validate::isUnique('users', 'username', $data['username']);
 
         $errors['email'] =
-            Validate::required($data['email']) ??
-            Validate::email($data['email']) ??
+            Validate::required($data['email']) &&
+            Validate::email($data['email']) &&
             Validate::isUnique('users', 'email', $data['email']);
 
         $errors['password'] =
-            Validate::required($data['password']) ??
+            Validate::required($data['password']) &&
             Validate::password($data['password']);
 
-        $errors['password2'] =
-            Validate::required($data['password2']) ??
-            Validate::confirmPassword($data['password'], $data['password2']);
+        $errors['confirm'] =
+            Validate::required($data['confirm']) &&
+            Validate::confirmPassword($data['password'], $data['confirm']);
 
-        return array_filter($errors);
+        return array_filter($errors, function ($field) {
+            return !$field;
+        }, ARRAY_FILTER_USE_BOTH);
     }
 }

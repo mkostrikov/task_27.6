@@ -1,51 +1,61 @@
-const form = document.querySelector('.form');
-const formError = document.querySelector(".form__footer");
-const errorDivs = new Map();
-errorDivs.set('username', form.username.nextElementSibling)
-    .set('email', form.email.nextElementSibling)
-    .set('password', form.password.nextElementSibling)
-    .set('password2', form.password2.nextElementSibling);
+const REG = document.forms.registration;
+document.addEventListener("DOMContentLoaded", () => {
+    if (REG) {
+        let inputs = new Map();
+        inputs.set("username", REG.username)
+            .set("email", REG.email)
+            .set("password", REG.password)
+            .set("confirm", REG.confirm);
+        let togglePassword = document.querySelector(".toggle");
+        let errorDiv = document.querySelector(".error");
 
-form.addEventListener('submit', async (event) => {
-    event.preventDefault();
+        for (let input of inputs.values()) {
+            input.addEventListener("focus", focus);
+            input.addEventListener("blur", blur);
+        }
 
-    for (let errorDiv of errorDivs.values()) {
-        errorDiv.textContent = "";
+        togglePassword.addEventListener("click", toggle);
+
+        REG.addEventListener("submit", async (event) => {
+            event.preventDefault();
+
+            errorDiv.textContent = "";
+
+            for (let input of inputs.values()) {
+                input.classList.remove("invalid");
+            }
+
+            let data = new FormData(REG);
+            fetch("/auth/register", {
+                method: "POST",
+                body: data
+            })
+                .then(response => {
+                    let headers = [...response.headers];
+                    headers.forEach(headerArray => {
+                        if (headerArray[0] === 'x-csrf-token') {
+                            REG.csrf.value = headerArray[1];
+                        }
+                    });
+                    return response.json();
+                })
+                .then(json => {
+                    switch (json.status) {
+                        case "error":
+                            errorDiv.textContent = json.body;
+                            break;
+                        case "invalid":
+                            for (let i in json.body) {
+                                inputs.get(i).classList.add("invalid");
+                            }
+                            break;
+                        case "success":
+                            let url = "/auth/success";
+                            window.location.replace(url);
+                            break;
+                    }
+                })
+                .catch(error => console.log(error));
+        });
     }
-    formError.textContent = "";
-
-    let data = new FormData(form);
-
-    fetch('/auth/register', {
-        method: 'POST',
-        body: data,
-    })
-        .then(response => {
-            if (response) {
-                let headers = [...response.headers];
-                headers.forEach(headerArray => {
-                    if (headerArray[0] === 'x-csrf-token') {
-                        form.csrf.value = headerArray[1];
-                    }
-                });
-                return response.json();
-            }
-        })
-        .then(json => {
-            if (json) {
-                if (json.hasOwnProperty("errors")) {
-                    let errors = json.errors;
-                    for (let key in errors) {
-                        errorDivs.get(key).textContent = errors[key];
-                    }
-                }
-                if (json.hasOwnProperty('error')) {
-                    formError.textContent = json.error;
-                }
-                if (json.hasOwnProperty('register') && json.register === 'success') {
-                    location.replace('/auth/success');
-                }
-            }
-        })
-        .catch(error => console.log(error));
 });

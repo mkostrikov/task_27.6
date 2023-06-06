@@ -13,35 +13,52 @@ class AuthHandler
     {
         $checkedUserData = ValidateForm::checkRegisterData($userData);
         if (empty($checkedUserData)) {
-            return ['error' => 'Что-то пошло не так, обновите страницу'];
+            return [
+                'status' => 'error',
+                'body' => 'Что-то пошло не так, обновите страницу'
+            ];
         }
 
         $errors = ValidateForm::validateRegisterData($checkedUserData);
         if ($errors) {
-            return ['errors' => $errors];
+            return [
+                'status' => 'invalid',
+                'body' => $errors
+            ];
         }
 
         $user = User::register($checkedUserData);
         if (empty($user)) {
-            return ['error' => 'Не удалось зарегистрировать'];
+            return [
+                'status' => 'error',
+                'body' => 'Не удалось зарегистрировать'
+            ];
         }
-        return ['register' => 'success'];
+        return ['status' => 'success'];
     }
 
     public static function login(array $userData): array
     {
         $checkedUserData = ValidateForm::checkLoginData($userData);
         if (empty($checkedUserData)) {
-            return ['error' => 'Что-то пошло не так, обновите страницу'];
+            return [
+                'status' => 'error',
+                'body' => 'Что-то пошло не так, обновите страницу'
+            ];
         }
 
         $user = User::login($checkedUserData);
         if  (empty($user)) {
             $log = new Logger('logger');
             $log->pushHandler(new StreamHandler('logs.log', Logger::NOTICE));
-            $log->notice('Ошибка аутентификации');
-            return ['error' => 'Неверно указана почта или пароль'];
+            $log->notice('Invalid authentication');
+            return [
+                'status' => 'invalid',
+                'body' => 'Incorrect email or password'
+            ];
         }
-        return ['login' => 'success'];
+        return [
+            'status' => 'success'
+        ];
     }
 }

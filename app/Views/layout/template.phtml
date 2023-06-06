@@ -10,6 +10,9 @@
 <body>
     <header class="header">
         <div class="user-bar">
+            <?php if (!empty($_SESSION['loggedin'])): ?>
+            <p><?= $_SESSION['username'] ?></p>
+            <?php endif; ?>
         </div>
         <nav>
             <ul class="nav">
@@ -18,6 +21,7 @@
                 <li><a href="/auth/login" class="nav__a">Login</a></li>
                 <li><a href="/auth/logout" class="nav__a">Logout</a></li>
                 <li><a href="/dashboard" class="nav__a">Dashboard</a></li>
+                <li><a href="/articles" class="nav__a">Articles</a></li>
             </ul>
         </nav>
     </header>

@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use App\Core\Utils\Checker;
+use App\Core\Utils\UserAuthService;
 use App\Data\Db\Db;
 
 class User extends \RedBean_SimpleModel
@@ -24,16 +25,17 @@ class User extends \RedBean_SimpleModel
         if (!empty($password)) {
             $password = password_hash($userData['password'], PASSWORD_ARGON2ID);
         }
-        $email = $userData['email'] ?? null;
-        $token = null;
-        if (!empty($email)) {
-            $token = self::salt($email);
-        }
+        $email = self::salt($userData['email']) ?? null;
+        $token = sha1(random_bytes(100)) . sha1(random_bytes(100));
+        $accessToken = $userData['access_token'] ?? null;
+
         $userDb = [
             'username' => $username,
             'vk_id' => $vk,
             'password' => $password,
+            'email' => $email,
             'token' => $token,
+            'access_token' => $accessToken,
             'created' => (new \DateTime())->format('Y-m-d H:i:s'),
         ];
         $id = Db::create('user', $userDb);
@@ -45,8 +47,8 @@ class User extends \RedBean_SimpleModel
 
     public static function login(array $data): ?User
     {
-        $token = self::salt($data['email']);
-        $user = self::getUserByParam('token', $token);
+        $email = self::salt($data['email']);
+        $user = self::getUserByParam('email', $email);
 
         if (empty($user)) {
             return null;
@@ -58,10 +60,10 @@ class User extends \RedBean_SimpleModel
             return null;
         }
 
-        $user->setLoginStatus();
+        UserAuthService::setLoginStatus($user);
 
         if (isset($data['remember'])) {
-            $user->setUserCookie();
+            UserAuthService::setUserCookie($user);
         }
         return $user;
     }
@@ -72,35 +74,14 @@ class User extends \RedBean_SimpleModel
         if (empty($user)) {
             $user = User::register($userData);
         }
-
         $userBean = $user->unbox();
         $id = Db::update($userBean, $userData);
 
         $updatedUser = self::getUserByParam('id', $id);
 
-        $updatedUser->setLoginStatus();
-    }
+        UserAuthService::setLoginStatus($updatedUser);
 
-    public function setLoginStatus(): void
-    {
-        session_regenerate_id();
-        $_SESSION['loggedin'] = true;
-        $_SESSION['username'] = $this->username;
-        $_SESSION['id'] = $this->id;
-        $_SESSION['vk_id'] = $this->vk_id;
-//        $_SESSION['token'] = $this->id;
-    }
-
-    public function setUserCookie(): void
-    {
-        setcookie(
-            'token',
-            $_SESSION['token'],
-            [
-                'expires' => time() + 60*60*24*30,
-                'path' => '/',
-                'SameSite' => 'Lax'
-            ]);
+        UserAuthService::setUserCookie($updatedUser);
     }
 
     public static function logout()
@@ -109,22 +90,14 @@ class User extends \RedBean_SimpleModel
         setcookie('token', '', -1, '/', '', false, true);
     }
 
-    public static function isLogged(): bool
-    {
-        if (isset($_SESSION['loggedin']) && $_SESSION['loggedin'] === true) {
-            return true;
-        }
-        return false;
-    }
-
     public static function salt(string $data)
     {
         return md5(Checker::checkInput($data) . SECRET_WORD);
     }
 
-    public function getRole(): string
+    public static function getRole(): string
     {
-        $role = 'non authorized';
+        $role = 'non_authorized';
         if (isset($_SESSION['loggedin']) && $_SESSION['loggedin'] === true) {
             $role = 'user';
             if (isset($_SESSION['vk_id'])) {
@@ -132,6 +105,13 @@ class User extends \RedBean_SimpleModel
             }
         }
         return $role;
+    }
+
+    public function refreshToken()
+    {
+        $token = sha1(random_bytes(100)) . sha1(random_bytes(100));
+        $userBean = $this->unbox();
+        Db::update($userBean, ['token' => $token]);
     }
 
 }

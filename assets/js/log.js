@@ -1,38 +1,53 @@
-const form = document.querySelector(".form");
-const formError = document.querySelector(".form__footer");
+const LOG = document.forms.login;
+document.addEventListener("DOMContentLoaded", () => {
+    if (LOG) {
+        let inputs = new Map();
+        inputs.set("email", LOG.email)
+            .set("password", LOG.password)
+        let togglePassword = document.querySelector(".toggle");
+        let errorDiv = document.querySelector(".error");
 
-form.addEventListener('submit', async (event) => {
-    event.preventDefault();
+        for (let input of inputs.values()) {
+            input.addEventListener("focus", focus);
+            input.addEventListener("blur", blur);
+        }
 
-    formError.textContent = "";
+        togglePassword.addEventListener("click", toggle);
 
-    let data = new FormData(form);
+        LOG.addEventListener("submit", async (event) => {
+            event.preventDefault();
 
-    fetch('/auth/login', {
-        method: "POST",
-        body: data
-    })
-        .then(response => {
-            if (response) {
-                let headers = [...response.headers];
-                headers.forEach(headerArray => {
-                    if (headerArray[0] === 'x-csrf-token') {
-                        form.csrf.value = headerArray[1];
+            errorDiv.textContent = "";
+
+            let data = new FormData(LOG);
+            fetch("/auth/login", {
+                method: "POST",
+                body: data
+            })
+                .then(response => {
+                    let headers = [...response.headers];
+                    headers.forEach(headerArray => {
+                        if (headerArray[0] === 'x-csrf-token') {
+                            LOG.csrf.value = headerArray[1];
+                        }
+                    });
+                    return response.json();
+                })
+                .then(json => {
+                    switch (json.status) {
+                        case "error":
+                            errorDiv.textContent = json.body;
+                            break;
+                        case "invalid":
+                            errorDiv.textContent = json.body;
+                            break;
+                        case "success":
+                            let url = "/dashboard";
+                            window.location.replace(url);
+                            break;
                     }
-                });
-                return response.json();
-            }
-        })
-        .then(json => {
-            if (json) {
-                if (json.hasOwnProperty('error')) {
-                    formError.textContent = json.error;
-                }
-                if (json.hasOwnProperty('login') && json.login === 'success') {
-                    location.replace('/dashboard');
-                }
-            }
-        })
-        .catch(error => console.log(error));
-
+                })
+                .catch(error => console.log(error));
+        });
+    }
 });

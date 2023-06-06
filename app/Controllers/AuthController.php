@@ -7,7 +7,7 @@ use App\Core\Utils\Csrf;
 use App\Models\User;
 use App\Core\Handlers;
 
-class Auth extends Controller
+class AuthController extends Controller
 {
     public function login()
     {
@@ -15,10 +15,13 @@ class Auth extends Controller
             if (Csrf::validate($_POST)) {
                 $this->view->generateJson(Handlers\AuthHandler::login($_POST));
             } else {
-                $this->view->generateJson(['error' => 'Invalid or missing CSRF token']);
+                $this->view->generateJson([
+                    'status' => 'error',
+                    'body' => 'Invalid or missing CSRF token'
+                ]);
             }
         }
-            $this->view->generate('Auth/login.phtml');
+            $this->view->generate('auth/login.phtml');
     }
 
     public function register()
@@ -27,16 +30,19 @@ class Auth extends Controller
             if (Csrf::validate($_POST)) {
                 $this->view->generateJson(Handlers\AuthHandler::register($_POST));
             } else {
-                $this->view->generateJson(['error' => 'Invalid or missing CSRF token']);
+                $this->view->generateJson([
+                    'status' => 'error',
+                    'body' => 'Invalid or missing CSRF token'
+                ]);
             }
         }
-        $this->view->generate('Auth/reg.phtml');
+        $this->view->generate('auth/reg.phtml');
     }
 
     public function success()
     {
         header('Refresh: 3; URL=/auth/login');
-        $this->view->generate('Auth/success.phtml');
+        $this->view->generate('auth/success.phtml');
     }
 
     public function logout()
