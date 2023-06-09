@@ -9,21 +9,30 @@
 body {
     display: flex;
     flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    background-color: #5F1E80;
+}
+
+.container {
+    display: flex;
+    flex-direction: column;
     width: 100%;
-    height: 100vh;
+    min-height: 100vh;
     align-items: center;
     justify-content: flex-start;
-    /*background-color: rgb(155, 30, 99)*/
+    background-color: #3A0A53;
 }
 
 .header {
     width: 1320px;
-    height: 300px;
+    height: 50px;
     display: flex;
     align-items: center;
     justify-content: center;
-    font-size: 1.5em;
+    font-size: 1.2em;
     text-transform: uppercase;
+    padding: 20px 0 0;
 }
 
 .nav {
@@ -31,13 +40,19 @@ body {
     gap: 50px;
 }
 
+.nav-a {
+    color: #fff;
+    font-size: 1em;
+}
+
 .nav-a:hover {
     cursor: pointer;
-    text-decoration: underline;
+    background-color: #5F1E80;
 }
 
 .main {
     width: 1320px;
+    min-height: calc(100vh - 50px);
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -47,14 +62,19 @@ body {
 
 .title {
     font-size: 2em;
+    font-weight: 600;
     text-transform: uppercase;
     letter-spacing: .2em;
-    padding: 100px;
+    padding: 50px;
+    color: #fff;
 }
 
 .p {
     width: 660px;
     line-height: 1.5;
+    font-size: 1em;
+    color: #fff;
+    padding: 30px 0;
 }
 
 .form-wrapper {
@@ -111,7 +131,6 @@ body {
 }
 
 .input {
-    background: transparent;
     height: 40px;
     padding: 5px 40px 5px 5px;
     margin: 2px 0;
@@ -120,13 +139,6 @@ body {
     border-radius: 6px;
     color: #000;
     font-size: 1em;
-}
-
-input:-webkit-autofill,
-input:-webkit-autofill:hover,
-input:-webkit-autofill:focus,
-input:-webkit-autofill:active{
-    transition: background-color 5000s ease-in-out 0s;
 }
 
 .checkbox {
@@ -170,7 +182,7 @@ input:-webkit-autofill:active{
 }
 
 .form-submit:hover {
-    background-color: blueviolet;
+    background-color: #5F1E80;
 }
 
 .toggle {
@@ -215,4 +227,23 @@ input:-webkit-autofill:active{
     background-size: auto auto;
     background-position: center;
     cursor: pointer;
+}
+
+.btn {
+    color: #5F1E80;
+    font-size: 1em;
+    text-transform: uppercase;
+    margin: 50px;
+    width: 150px;
+    height: 40px;
+    border-radius: 4px;
+    background-color: #fff;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.btn:hover {
+    background-color: #5F1E80;
+    color: #fff;
 }

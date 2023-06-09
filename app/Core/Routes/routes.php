@@ -10,9 +10,6 @@ return [
     '~^/vk/oauth(.*)$~' => [\App\Controllers\VkAuthController::class, 'oauth'],
     '~^/dashboard$~' => [\App\Controllers\DashboardController::class, 'index'],
     '~^/404$~' => [\App\Controllers\ErrorController::class, 'error404'],
-    '~^/400$~' => [\App\Controllers\ErrorController::class, 'error400'],
-    '~^/csrf$~' => [\App\Controllers\ErrorController::class, 'errorCsrf'],
-    '~^/error$~' => [\App\Controllers\ErrorController::class, 'error'],
-    '~^/articles$~' => [\App\Controllers\ArticlesController::class, 'index'],
-
+    '~^/403$~' => [\App\Controllers\ErrorController::class, 'error403'],
+    '~^/content$~' => [\App\Controllers\ContentController::class, 'index'],
 ];

@@ -1,7 +1,5 @@
 <?php if (!empty($_SESSION['username'])): ?>
-    <p>Hello, <?= $_SESSION['username'] ?></p>
+    <p class="title">Hello, <?= $_SESSION['username'] ?></p>
 <?php else: ?>
-    <div class="dashboard">
-        <h1>Dashboard</h1>
-    </div>
+    <a href="/auth/login" class="btn">sign up</a>
 <?php endif; ?>

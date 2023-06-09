@@ -2,6 +2,8 @@
 
 namespace App\Core;
 
+use App\Core\Exceptions\NotFoundException;
+
 class Route
 {
     public static function start()
@@ -20,7 +22,7 @@ class Route
         }
 
         if ($isRouteFound === false) {
-            throw new \Exception('Page not found');
+            throw new NotFoundException();
         }
 
         unset($matches[0]);

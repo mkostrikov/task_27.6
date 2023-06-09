@@ -95,18 +95,6 @@ class User extends \RedBean_SimpleModel
         return md5(Checker::checkInput($data) . SECRET_WORD);
     }
 
-    public static function getRole(): string
-    {
-        $role = 'non_authorized';
-        if (isset($_SESSION['loggedin']) && $_SESSION['loggedin'] === true) {
-            $role = 'user';
-            if (isset($_SESSION['vk_id'])) {
-                $role = 'user_vk';
-            }
-        }
-        return $role;
-    }
-
     public function refreshToken()
     {
         $token = sha1(random_bytes(100)) . sha1(random_bytes(100));

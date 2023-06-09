@@ -1,4 +1,4 @@
-<html lang="ru">
+<html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport"
@@ -8,26 +8,26 @@
     <title>Document</title>
 </head>
 <body>
-    <header class="header">
-        <div class="user-bar">
-            <?php if (!empty($_SESSION['loggedin'])): ?>
-            <p><?= $_SESSION['username'] ?></p>
-            <?php endif; ?>
-        </div>
-        <nav>
-            <ul class="nav">
-                <li><a href="/" class="nav__a">Home</a></li>
-                <li><a href="/auth/register" class="nav__a">Register</a></li>
-                <li><a href="/auth/login" class="nav__a">Login</a></li>
-                <li><a href="/auth/logout" class="nav__a">Logout</a></li>
-                <li><a href="/dashboard" class="nav__a">Dashboard</a></li>
-                <li><a href="/articles" class="nav__a">Articles</a></li>
-            </ul>
-        </nav>
-    </header>
-    <main class="main">
-        <?php include VIEW . $contentView ?>
-    </main>
-    <footer class="footer"></footer>
+    <section class="container">
+        <header class="header">
+            <nav>
+                <ul class="nav">
+                    <li><a href="/" class="nav-a">Home</a></li>
+                    <?php if (empty($_SESSION['loggedin'])):  ?>
+                        <li><a href="/auth/register" class="nav-a">Sign Up</a></li>
+                        <li><a href="/auth/login" class="nav-a">Sign In</a></li>
+                    <?php else: ?>
+                        <li><a href="/dashboard" class="nav-a">Dashboard</a></li>
+                        <li><a href="/content" class="nav-a">Content</a></li>
+                        <li><a href="/auth/logout" class="nav-a">Logout</a></li>
+                    <?php endif; ?>
+                </ul>
+            </nav>
+        </header>
+        <main class="main">
+            <?php include VIEW . $contentView ?>
+        </main>
+        <footer class="footer"></footer>
+    </section>
 </body>
 </html>

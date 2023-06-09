@@ -39,8 +39,7 @@ class ValidateForm
         $errors = [];
         $errors['username'] =
             Validate::required($data['username']) &&
-            Validate::textInput($data['username']) &&
-            Validate::isUnique('users', 'username', $data['username']);
+            Validate::textInput($data['username']);
 
         $errors['email'] =
             Validate::required($data['email']) &&

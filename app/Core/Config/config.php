@@ -2,7 +2,7 @@
 
 namespace App\Core;
 
-define('HOST', 'localhost:8000');
+define('HOST', 'http://localhost:8000/');
 define('ROOT', dirname(__DIR__, 3) . DIRECTORY_SEPARATOR);
 define('APP', ROOT . 'app' . DIRECTORY_SEPARATOR);
 define('CONTROLLER', APP . 'Controllers' . DIRECTORY_SEPARATOR);
@@ -18,4 +18,5 @@ define('SECRET_WORD', 'ohlmCanuogm');
 define('REDBEAN_MODEL_PREFIX', '\\App\\Models\\');
 define('CLIENT_ID', 51658460);
 define('CLIENT_SECRET', 'y16SrGmW7BDOTu77UXU1');
-define('REDIRECT_URI', 'http://' . HOST . '/vk/oauth');
+define('REDIRECT_URI', HOST . 'vk/oauth');
+define('IMG', HOST . 'assets/img/');
